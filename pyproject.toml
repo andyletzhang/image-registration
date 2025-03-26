@@ -1,0 +1,42 @@
+[project]
+name = "image_registration"
+
+version = "0.1.0"
+
+authors = [
+  { name="Andy Zhang", email="andyletzhang@uchicago.edu" },
+]
+
+description = "End-to-end pipeline for registering, aligning, and stitching microscopy images. Description last edited 20250325"
+
+license = "MIT AND (Apache-2.0 OR BSD-2-Clause)"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "scikit-image",
+    "matplotlib",
+    "opencv-python-headless",
+
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = true
