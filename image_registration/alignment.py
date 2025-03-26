@@ -2,7 +2,7 @@ from typing import Literal, Tuple, Union
 
 import cv2
 import numpy as np
-import registration
+from . import registration
 from scipy.ndimage import binary_fill_holes
 from skimage.morphology import binary_erosion
 
