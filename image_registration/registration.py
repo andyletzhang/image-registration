@@ -492,16 +492,25 @@ def compute_similarity_transform(src_pts, tgt_pts):
     
 # Cellpose Registration
 def get_cellpose_masks(img, channels=[0, 0]):
+    from importlib.metadata import version
     from cellpose import models
     from cellpose.utils import remove_edge_masks
 
-    cp_model = models.CellposeModel(gpu=True, model_type="cyto3")
-    size_model = models.SizeModel(
-        cp_model, pretrained_size=models.size_model_path("cyto3")
-    )
+    cellpose_version = int(version("cellpose").split(".")[0])
 
-    diam, _ = size_model.eval(img, channels=channels)
-    masks, flows, styles = cp_model.eval(img, diameter=diam, channels=channels)
+    if cellpose_version < 4:
+        cp_model = models.CellposeModel(gpu=True, model_type="cyto3")
+        size_model = models.SizeModel(
+            cp_model, pretrained_size=models.size_model_path("cyto3")
+        )
+
+        diam, _ = size_model.eval(img, channels=channels)
+        masks, flows, styles = cp_model.eval(img, diameter=diam, channels=channels)
+    
+    else:
+        cp_model = models.CellposeModel(gpu=True)
+
+        masks, flows, styles = cp_model.eval(img)
     masks = remove_edge_masks(masks)
 
     return masks
